@@ -15,13 +15,13 @@ export class UserRepositoryImplement implements UserRepository {
         return this.datasource.get();
     }
     getById(id: number): Promise<UserEntity> {
-        return this.getById(id);
+        return this.datasource.getById(id);
     }
     deleteById(id: number): Promise<UserEntity> {
-        return this.deleteById(id);
+        return this.datasource.deleteById(id);
     }
     updateById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
-        return this.updateById(updateUserDto);
+        return this.datasource.updateById(updateUserDto);
     }
 
 }

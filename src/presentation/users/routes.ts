@@ -1,4 +1,7 @@
 import { Router } from "express";
+import { UserPrismaClientDatasourceImplement } from "../../infraestructure/datasource/userprismaclient.datasource.impl";
+import { UserRepositoryImplement } from "../../infraestructure/repository/user.repository.impl";
+import { UserController } from "./controller";
 
 export class UserRoutes {
     constructor() { }
@@ -6,12 +9,15 @@ export class UserRoutes {
     static get routes(): Router {
         const router = Router();
 
-        //TODO create USER datasource
-        //TODO create USER repository
-        //TODO create USER controller 
+        const userDatasource = new UserPrismaClientDatasourceImplement();
+        const userRepository = new UserRepositoryImplement(userDatasource);
+        const userController = new UserController(userRepository);
 
-        router.get('/', () => console.log("user routes"));
-        //TODO CRUD routes
+        router.get('/', userController.getUsers);
+        router.get('/:id', userController.getUserById);
+        router.post('/', userController.createUser);
+        router.delete('/:id', userController.deleteUser);
+        router.put('/:id', userController.updateUser);
 
 
         return router;
